@@ -15,6 +15,13 @@
 
 
 
+Direct blocks: 0-48KB
+Single indirect: 48KB-4.05MB
+Double indirect: 4.05MB-4GB
+Triple indirect: 4GB-4TB+
+
+
+
 ### Sources consulted
 ---
 
