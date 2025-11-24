@@ -25,8 +25,12 @@ Triple indirect: 4GB-4TB+
 ### Sources consulted
 ---
 
-
-
+ 
+1. https://www.geeksforgeeks.org/operating-systems/inode-in-operating-system/
+UNIX implementation of inodes
+2. 
+3. 
+4. 
 
 ### Pontential Improvements
 ---

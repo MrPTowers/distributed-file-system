@@ -43,7 +43,7 @@ class Packet:
 
 	def DecodePacket(self, packet):
 		"""Receives a serialized message and turns it into a packet object."""
-		self.packet = json.loads(packet)	
+		self.packet = json.loads(packet)
 
 	def BuildRegPacket(self, addr, port):
 		"""Builds a registration packet"""
@@ -129,11 +129,4 @@ class Packet:
 	def BuildCommand(self, cmd):
 		"""Builds a packet type"""
 		if cmd in self.commands:
-			self.packet = {"command": cmd}
-
-
-
-		
-	
-		
-		
+			self.packet = {"command": cmd}		
