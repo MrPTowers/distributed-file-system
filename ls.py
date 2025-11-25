@@ -1,10 +1,13 @@
 import socket
 
+from classes.packet import Packet
+
 def usage():
 	print("Usage: python3 ls.py <server>:<port, default=8000>")
 	sys.exit(0)
 
 def client(ip, port):
+	#TODO
 	return 0
 
 

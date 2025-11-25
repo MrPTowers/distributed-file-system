@@ -21,6 +21,8 @@ Double indirect: 4.05MB-4GB
 Triple indirect: 4GB-4TB+
 
 
+On startup, insert directory inode for root
+
 
 ### Sources consulted
 ---

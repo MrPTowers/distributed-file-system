@@ -13,5 +13,26 @@ class Packet:
 		self.packet = {}
 
 	def getEncodedPacket(self):
+		print(" ")		
 
 	def decodePacket(self):
+		print(" ")
+
+	def getCommand(self):
+		print(" ")
+
+	def getAddr(self):
+		print(" ")
+
+	def getPort(self):
+		print(" ")
+
+	def getData(self):
+		print(" ")
+
+	def buildSendPacket(self, cmd, addr, port):
+		self.packet = {"cmd": cmd, "addr": addr, "port": port, "data": []}
+
+	def buildReceivePacket(self, ):
+		print(" ")
+

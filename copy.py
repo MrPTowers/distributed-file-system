@@ -7,10 +7,10 @@ def usage():
 	sys.exit(0)
 
 def copyToDFS(address, fname, path):
-
+	#TODO
 
 def copyFromDFS(address, fname, path):
-
+	#TODO
 
 if __name__ == "__main__":
 	if len(sys.argv) < 3:
