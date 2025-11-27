@@ -22,9 +22,9 @@ def register(meta_ip, meta_port, data_ip, data_port):
 
 	try:
 		response = "NAK"
-		packet = Packet()
+		sp = Packet()
 		while response == "NAK":
-			packet.BuildSendPacket(data_ip, data_port)
+			sp.BuildSendPacket(data_ip, data_port)
 			socket.sendall(packet.getEncodedPacket())
 			if response == "DUP":
 				print("DUP")

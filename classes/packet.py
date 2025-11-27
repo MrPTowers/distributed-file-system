@@ -13,26 +13,43 @@ class Packet:
 		self.packet = {}
 
 	def getEncodedPacket(self):
-		print(" ")		
+		return json.dumps(self.packet)
 
 	def decodePacket(self):
-		print(" ")
+		self.packet = json.loads(packet)
 
 	def getCommand(self):
-		print(" ")
+		if self.packet.has_key["cmd"]:
+			return self.packet["cmd"]
+		return None
 
 	def getAddr(self):
-		print(" ")
+		if self.packet.has_key["addr"]:
+			return self.packet["addr"]
+		return None
 
 	def getPort(self):
-		print(" ")
+		if self.packet.has_key["port"]:
+			return self.packet["port"]
+		return None
 
 	def getData(self):
-		print(" ")
+		if self.packet.has_key["data"]:
+			return self.packet["data"]
+		return None
 
-	def buildSendPacket(self, cmd, addr, port):
-		self.packet = {"cmd": cmd, "addr": addr, "port": port, "data": []}
+	def buildClientSendPacket(self, cmd, addr, port, data): #From cp and ls clients to meta-data server
+		if cmd in self.commands:
+			self.packet = {"cmd": cmd, "addr": addr, "port": port, "data": [data]}
+			return True
+		return False
 
-	def buildReceivePacket(self, ):
-		print(" ")
+	def buildClientReceivePacket(self, data): #From meta-data server to cp and ls clients
+		self.packet = {"data": [data]}
+
+	def buildDataSendPacket(self, cmd, data_ip, data_port):
+		self.packet = {"cmd": cmd, "addr": data_ip, "port": data_port}
+
+	def buildDataReceivePacket(self, meta_ip, meta_port, data):
+		self.packet = {"addr": meta_ip, "port": meta_port, "data":[data]}
 
