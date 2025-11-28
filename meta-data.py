@@ -7,46 +7,49 @@ from classes.packet import Packet
 superblock = {"block_size": 4096, "inode_table": []}
 
 def usage():
-	print(f"Usage: python3 meta-data.py <port, default=8000>")
-	sys.exit(0)	
+    print(f"Usage: python3 meta-data.py <port, default=8000>")
+    sys.exit(0)	
 
 class MetaTCPHandler(socketserver.BaseRequestHandler):
 
 	def handle_reg(self, packet):
+        #Handle data node registration
 		print("reg handle") #TODO
 
 	def handle_ls(self, packet):
-		
-		try:
-			#TODO
-			print("ls handle")
-	
+        #Handle ls request from ls client 
+        try:
+            #TODO
+            print("ls handle")
 		except:
-			self.request.sendall("NAK")
+            self.request.sendall("NAK")
 
-	def handle_put(self, packet):
-		print("put handle") #TODO
 
-	def handle_get(self, packet):
-		print("get handle") #TODO
+    def handle_put(self, packet):
+        print("put handle") #TODO
 
-	def handle_rm(self, packet):
-		print("rm handle")	#TODO
+    def handle_get(self, packet):
+        print("get handle") #TODO
 
-	def handle_blocks(self, packet):
-		print("block handle") #TODO
+    def handle_rm(self, packet):
+        #Handle rm request from rm client
+        print("rm handle")	#TODO
 
-	def handle(self):	
-		packet = Packet()
+    def handle_blocks(self, packet):
+        print("block handle") #TODO
 
-		msg = self.request.recv(1024)	
+    def handle(self):
+        packet = Packet()
 
-		p.decodePacket(msg)
+        msg = self.request.recv(1024)	
 
+        p.decodePacket(msg)
+
+        print(p.cmd)
 		#TODO
 		
 
-		if packet.cmd == "reg":
+        if packet.cmd == "reg":
 			self.handle_reg(packet)
 		elif cmd == "ls":
 			self.handle_ls(packet)

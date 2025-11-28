@@ -18,8 +18,6 @@ def register(meta_ip, meta_port, data_ip, data_port):
 	print("Connecting to meta data server")
 	socket.connect((meta_ip, meta_port))
 
-	#TODO maybe
-
 	try:
 		response = "NAK"
 		sp = Packet()
