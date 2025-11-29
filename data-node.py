@@ -4,34 +4,40 @@ import socketserver
 import time
 import sys
 import subprocess
+import os
 
-from classes.dnode import DataNode
 from classes.packet import Packet
 
+block_size = 4096
+nodes_dir = "dfs_data/data_nodes"
+
 def usage():
-	print(f"Usage: python3 data-node.py <server address> <port> <data path> <metadata port,default=8000")
+	print(f"Usage: python3 data-node.py <server address> <port> <data path> <metadata port, default=8000>")
 	sys.exit(0)
 
 def register(meta_ip, meta_port, data_ip, data_port):
 
-	socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	print("Connecting to meta data server")
-	socket.connect((meta_ip, meta_port))
+	s.connect((meta_ip, meta_port))
 
 	try:
-		response = "NAK"
-		sp = Packet()
-		while response == "NAK":
-			sp.BuildSendPacket(data_ip, data_port)
-			socket.sendall(packet.getEncodedPacket())
-			if response == "DUP":
-				print("DUP")
-			elif response ==  "NAK":
-				print("Error")
+		packet = Packet()
+		packet.buildDNPacket('reg', data_ip, data_port)
+		s.sendall(packet.getEncodedPacket().encode())
+		while True:
+			response = s.recv(1024).decode()
+			if not response:
+				continue
+			elif response == "DUP":
+				print("Address and Port already registered.")
+				break
+			elif response == "ACK":
+				print("Data node registered")
+				break
 	finally:
 		print("Closing connection to meta_data server")
-		socket.close()
-
+		s.close()
 
 class DataNodeTCPHandler(socketserver.BaseRequestHandler):
 	def handle_put(self, packet):
@@ -42,14 +48,12 @@ class DataNodeTCPHandler(socketserver.BaseRequestHandler):
 
 	def handle(self):
 		msg = self.request.recv(1024)
-		print(" ") 
-
-		#TODO
+		print("Message received")
 
 		p = Packet()
 		p.decodePacket(msg)
 
-		cmd = p.packet.cmd
+		cmd = p.getCommand()
 		if cmd == "put":
 			self.handle_put(p)
 		elif cmd == "get":
@@ -65,22 +69,25 @@ if __name__ == '__main__':
 	try:
 		HOST = sys.argv[1]
 		PORT = int(sys.argv[2])
-		DATA_PATH = sys.argv[3]
+		DATA_NODE = sys.argv[3]
 
-		if len(sys.argv > 4):
+		if len(sys.argv) > 4:
 			META_PORT = int(sys.argv[4])
 
-		if not os.path.isdir(DATA_PATH):
-			print(f"Error: Data path DATA_PATH{} is not a directory.")
-			usage()
 	except:
 		usage()
 
-	register("localhost", META_PORT, HOST, PORT)
-	server = socketserver.TCPServer((HOST, PORT), DataNodeTCPHandler)
+	if not os.path.isdir(nodes_dir): #If data nodes dir doest exist, make it
+		print("Initalizing first data node")
+		os.makedirs(f"{nodes_dir}/{DATA_NODE}")
+	elif not os.path.isdir(f"{nodes_dir}/{DATA_NODE}"):
+		print("Initializing data node")
+		os.mkdir(f"{nodes_dir}/{DATA_NODE}")
 
-    # Create the server, binding to localhost on port 8000
-    with socketserver.TCPServer((HOST, PORT), MyTCPHandler) as server:
-        # Activate the server; this will keep running until you
-        # interrupt the program with Ctrl-C
-        server.serve_forever()
+	register("localhost", META_PORT, HOST, PORT)
+
+    # Create the server
+	with socketserver.TCPServer((HOST, PORT), DataNodeTCPHandler) as server:
+		# Activate the server; this will keep running until you
+		# interrupt the program with Ctrl-C
+		server.serve_forever()

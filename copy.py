@@ -8,9 +8,11 @@ def usage():
 
 def copyToDFS(address, fname, path):
 	#TODO
+	return 0
 
 def copyFromDFS(address, fname, path):
 	#TODO
+	return 0
 
 if __name__ == "__main__":
 	if len(sys.argv) < 3:
