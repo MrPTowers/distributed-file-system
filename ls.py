@@ -18,10 +18,10 @@ def client(ip, port):
 		s.sendall(packet.getEncodedPacket().encode())
 		print("Sent ls request")
 		while True:
-			data = s.recv(1024)
-			if not data:
+			file_list = s.recv(1024).decode()
+			if not file_list:
 				continue
-			print(f"\nDFS contents:\n{data.decode()}")
+			print(f"\nDFS contents:\n{file_list}")
 			break
 	finally:
 		print("Closing connection to meta_data server")

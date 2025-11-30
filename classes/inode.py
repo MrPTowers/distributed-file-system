@@ -4,7 +4,7 @@ class iNode:
 	def __init__(self, id, file_type):
 		self.id = id #inode id
 		self.file_type = file_type #type of file. This implementation only uses f or d for file or directory. It can also be empty when first loading existing data in meta_data server
-		self.file_size = 0 #size of file in blocks
+		self.file_size = 0 #size of file in bytes
 		self.direct_count = 12 #max pointers in first layer of inode
 		self.ptr_per_block = 512 #amount of pointers allowed in any given data block starting with single indirect
 		self.directory_entries = [] #If the file is a directory, list of tuples with fileanems and inodes
@@ -26,7 +26,6 @@ class iNode:
 		if level == 0:
 			if len(block) < max_width:
 				block.append(bid)
-				self.file_size = self.file_size + 1
 				return True
 			return False
 

@@ -5,6 +5,7 @@ class DataNode:
 		self.id = id
 		self.address = address
 		self.port = port
+		self.blocks = []
 
 	def getConn(self):
 		return self.address, self.port

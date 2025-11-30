@@ -79,7 +79,7 @@ if __name__ == '__main__':
 
 	if not os.path.isdir(nodes_dir): #If data nodes dir doest exist, make it
 		print("Initalizing first data node")
-		os.makedirs(f"{nodes_dir}/{DATA_NODE}")
+		os.makedirs(f"{nodes_dir}/{DATA_NODE}", exist_ok=True)
 	elif not os.path.isdir(f"{nodes_dir}/{DATA_NODE}"):
 		print("Initializing data node")
 		os.mkdir(f"{nodes_dir}/{DATA_NODE}")
