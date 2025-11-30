@@ -74,14 +74,17 @@ class MetaTCPHandler(socketserver.BaseRequestHandler):
 		#Handle put request (from copy client)
 		send_packet = Packet()
 		try:
+			inode_id = len(superblock)
 			data = packet.getData()
 			if len(data) == 3: #Upload is a directory
-				print("here")						
+				print("directory")						
 			elif len(data) == 2: #Upload is a single file
-				send_packet.buildMDPacket("Hello world")
+				inode = Inode(inode_id, 'f') #Make new inode for file
+				superblock.append(inode) #Append to superblock
+				send_packet.buildMDPacket(data_nodes) #Prep packet to send back to copy with data node objects
 				self.request.sendall(send_packet.getEncodedPacket().encode())
 		except:
-			print("error")	
+			print("error")
 
 		print("put request processed") #TODO
 
@@ -92,7 +95,7 @@ class MetaTCPHandler(socketserver.BaseRequestHandler):
 
 
 	def handle_blocks(self, packet):
-		#Handle blocks request (from )
+		#Handle blocks request (from copy client)
 		print("block handle") #TODO
 
 	def handle(self):

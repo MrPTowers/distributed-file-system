@@ -28,7 +28,7 @@ class Packet:
 		return None
 
 	def getData(self):
-		if "data" in self.packet:			
+		if "data" in self.packet:
 			return self.packet["data"]
 		return None
 
