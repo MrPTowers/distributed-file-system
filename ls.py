@@ -14,7 +14,7 @@ def client(ip, port):
 	s.connect((ip, port))
 	try:
 		packet = Packet()
-		packet.buildClientPacket("ls", [])
+		packet.buildPacket("ls", [])
 		s.sendall(packet.getEncodedPacket().encode())
 		print("Sent ls request")
 		while True:

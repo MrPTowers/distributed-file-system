@@ -8,7 +8,7 @@ class DataNode:
 		self.blocks = []
 
 	def getConn(self):
-		return self.address, self.port
+		return (self.address, self.port)
 
 	def saveData(self, dirpath):
 		with open(f"{dirpath}/{self.id}.json", "w") as file:
